@@ -5,16 +5,16 @@ import { Provider } from "react-redux";
 // Own Imports
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
-import { addExpense } from "./actions/expenses";
-import { setTextFilter } from "./actions/filters";
-import getVisibleExpenses from "./selectors/expenses";
+// import { addExpense } from "./actions/expenses";
+// import { setTextFilter } from "./actions/filters";
+// import getVisibleExpenses from "./selectors/expenses";
+import "./firebase/firebase";
+// import "./playground/promises.js";
 
 // CSS Imports
 import "normalize.css/normalize.css";
 import "react-dates/lib/css/_datepicker.css";
 import "./styles/styles.scss";
-
-console.log("testing");
 
 const store = configureStore();
 // console.log(store.getState());
