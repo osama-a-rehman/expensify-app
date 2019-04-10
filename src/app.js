@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 // Own Imports
-import AppRouter from "./routers/AppRouter";
+import AppRouter, { history } from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 // import { addExpense } from "./actions/expenses";
 import { startSetExpenses } from "./actions/expenses";
+import { login, logout } from "./actions/auth";
 // import { setTextFilter } from "./actions/filters";
 // import getVisibleExpenses from "./selectors/expenses";
-import "./firebase/firebase";
+import { firebase } from "./firebase/firebase";
 // import "./playground/promises.js";
 
 // CSS Imports
@@ -68,8 +69,37 @@ const jsx = (
   </Provider>
 );
 
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById("app"));
+    hasRendered = true;
+  }
+};
+
 ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
 
 store.dispatch(startSetExpenses()).then(() => {
   ReactDOM.render(jsx, document.getElementById("app"));
+});
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("User is logged in ");
+    console.log("uid", user.uid);
+    store.dispatch(login(user.uid));
+    store.dispatch(startSetExpenses()).then(() => {
+      renderApp();
+
+      if (history.location.pathname === "/") {
+        console.log('history.push(" / dashboard")');
+        history.push("/dashboard");
+      }
+    });
+  } else {
+    console.log("User is not logged in ");
+    renderApp();
+    history.push("/");
+    store.dispatch(logout());
+  }
 });
