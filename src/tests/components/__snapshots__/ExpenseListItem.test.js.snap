@@ -1,30 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ExpenseListItem Component with expenses 1`] = `
-<div>
-  <h2>
-    Expense: 
-  </h2>
-  Description: 
-  Gum
-   
-  <br />
-  Note: 
-   
-  <br />
-  Amount: 
-  $1.95
-   
-  <br />
-  Created At: 
-  January 1st, 1970
-   
-  <br />
-  <Link
-    replace={false}
-    to="/edit/1"
+<Link
+  className="list-item"
+  replace={false}
+  to="/edit/1"
+>
+  <div>
+    <h3
+      className="list-item__title"
+    >
+      Gum
+    </h3>
+    <span
+      className="list-item__sub-title"
+    >
+      January 1st, 1970
+    </span>
+  </div>
+  <h3
+    className="list-item__data"
   >
-    Edit
-  </Link>
-</div>
+    $1.95
+  </h3>
+</Link>
 `;
